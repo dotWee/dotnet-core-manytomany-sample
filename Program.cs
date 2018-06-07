@@ -15,7 +15,6 @@ namespace ManyToMany
                 for(int i = 0; i < 100; i++) {
                     if(ctx.Students.Where(s => s.StudentId == i).Count() == 0) {
                         var s = new Student() {
-                            StudentId = i,
                             Matrikelnummer = $"12345678{i}",
                             Vorname = "Max",
                             Nachname = "Mustermann"
@@ -28,7 +27,6 @@ namespace ManyToMany
                 // Falls nötig, Testdozent anlegen
                 if(ctx.Dozents.Where(d => d.DozentId == 1).Count() == 0) {
                     var d = new Dozent() {
-                        DozentId = 1,
                         Vorname = "Moritz",
                         Nachname = "Musterlehrer"
                     };
