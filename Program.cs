@@ -12,7 +12,7 @@ namespace ManyToMany
 
             using(var ctx = new ManyToManyContext()) {
                 // Falls nötig, Teststudenten anlegen
-                for(int i = 0; i < 100; i++) {
+                for(int i = 1; i < 100; i++) {
                     if(ctx.Students.Where(s => s.StudentId == i).Count() == 0) {
                         var s = new Student() {
                             Matrikelnummer = $"12345678{i}",
