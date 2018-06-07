@@ -15,11 +15,11 @@ namespace ManyToMany
     public class ManyToManyContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
-        public DbSet<Dozent> Dozents { get; set; }        
+        public DbSet<Dozent> Dozents { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=manytomany.db");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=manytomany;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
