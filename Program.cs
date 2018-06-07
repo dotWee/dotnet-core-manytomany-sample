@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ManyToMany
 {
@@ -34,25 +35,23 @@ namespace ManyToMany
                     ctx.SaveChanges();
                 }
 
-                var st = ctx.Students.Where(s => s.StudentId == 1).First();
-                var dz = ctx.Dozents.Where(d => d.DozentId == 1).First();
+                var st = ctx.Students.Where(s => s.StudentId == 11)
+                                     .Include(s => s.Bekanntschaften)
+                                     //.ThenInclude(b => b.Dozent)
+                                     .First();
+                var dz = ctx.Dozents.Where(d => d.DozentId == 1).Include(s => s.Bekanntschaften).First();
 
                 // Beziehung hinzufügen
-                var bez = new Bekanntschaft() {
+                var bek = new Bekanntschaft() {
                     Student = st,
                     Dozent = dz
+                    //StudentId = st.StudentId,
+                    //DozentId = dz.DozentId
                 };
 
-                if(st.Bekanntschaften == null) {
-                    st.Bekanntschaften = new List<Bekanntschaft>();
-                }
-
-                if(dz.Bekanntschaften == null) {
-                    dz.Bekanntschaften = new List<Bekanntschaft>();
-                } 
-
-                st.Bekanntschaften.Add(bez);
-                dz.Bekanntschaften.Add(bez);
+                ctx.Entry(st).State = EntityState.Modified;
+                
+                st.Bekanntschaften.Add(bek);
                 ctx.SaveChanges();
             }
         }
