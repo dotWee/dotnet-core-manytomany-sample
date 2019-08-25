@@ -1,5 +1,6 @@
 # dotnet-core-manytomany-sample
-Many to many sample with entity framework core and dotnet core
+
+Many to many sample with entity framework core and dotnet core with support for lazy loading
 
 ## usage
 
