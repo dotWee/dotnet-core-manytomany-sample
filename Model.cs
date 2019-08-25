@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 /*
  * Anlegen:
@@ -19,7 +20,9 @@ namespace ManyToMany
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=manytomany.db");
+            optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlite("Data Source=manytomany.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,7 +49,7 @@ namespace ManyToMany
         public string Vorname { get; set; }
         public string Nachname { get; set; }
 
-        public List<Bekanntschaft> Bekanntschaften { get; set; }
+        public virtual ICollection<Bekanntschaft> Bekanntschaften { get; set; }
     }
 
     public class Dozent
@@ -55,15 +58,15 @@ namespace ManyToMany
         public string Vorname { get; set; }
         public string Nachname { get; set; }
 
-        public List<Bekanntschaft> Bekanntschaften { get; set; }
+        public virtual ICollection<Bekanntschaft> Bekanntschaften { get; set; }
     }
 
     public class Bekanntschaft 
     {        
-        public Dozent Dozent { get; set; }
+        public virtual Dozent Dozent { get; set; }
         public int DozentId { get; set; }
      
-        public Student Student { get; set; }
+        public virtual Student Student { get; set; }
         public int StudentId { get; set; }
     }
 }
